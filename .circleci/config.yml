@@ -42,11 +42,11 @@ jobs:
       - run:
           name: Build and push to Dockerhub
           command: |
-            docker build -t $DOCKER_HUB_USER_ID/$IMAGE_NAME:latest .
+            docker build -t $IMAGE_NAME:latest .
             docker login -e $DOCKER_HUB_EMAIL -u $DOCKER_HUB_USER_ID -p $DOCKER_HUB_PASSWORD
             docker push $DOCKER_HUB_USER_ID/$IMAGE_NAME:latest    
 
-  
+        
 
 workflows:
   version: 2
