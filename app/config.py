@@ -6,8 +6,11 @@ class Settings(BaseSettings):
     database_password: str
     database_name : str
     database_username: str
+    test_database: str
+
 
     class Config:
         env_file = ".env"
 
 settings = Settings()
+

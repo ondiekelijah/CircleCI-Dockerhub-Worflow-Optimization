@@ -16,7 +16,7 @@ from alembic import command
 
 
 # Create the new database session
-SQLALCHEMY_DATABASE_URL = f"postgresql://{settings.database_username}:{settings.database_password}@{settings.database_hostname}/{settings.database_name}"
+SQLALCHEMY_DATABASE_URL = f"postgresql://{settings.database_username}:{settings.database_password}@{settings.database_hostname}/{settings.test_database}"
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
