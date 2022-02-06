@@ -104,5 +104,5 @@ def init_posts(session):
 
     posts = session.query(models.Post).all()
 
-    # Returns an sqlalchemy model
+    # Returns an sqlalchemy model, all posts
     return posts
