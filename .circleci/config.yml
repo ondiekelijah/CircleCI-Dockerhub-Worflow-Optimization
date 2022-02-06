@@ -32,9 +32,6 @@ jobs:
             . venv/bin/activate
             pip install -r requirements.txt
 
-    steps:
-      - checkout
-      - run:
           name: Build, tag and push to Dockerhub
           command: |
             docker build -t $IMAGE_NAME .
