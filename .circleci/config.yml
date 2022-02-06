@@ -1,0 +1,48 @@
+version: 2
+workflows:
+  build-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+jobs:
+  build:
+    docker:
+      - image: cimg/python:3.9.2
+        auth:
+          username: $DOCKER_HUB_USER_ID
+          password: $DOCKER_HUB_PASSWORD
+        environment:
+          DATABASE_HOSTNAME: $DATABASE_HOSTNAME
+          DATABASE_PORT: $DATABASE_PORT
+          DATABASE_PASSWORD: $DATABASE_PASSWORD
+          DATABASE_NAME: $TEST_DATABASE
+          DATABASE_USERNAME: $DATABASE_USERNAME
+          TEST_DATABASE: $TEST_DATABASE
+
+      - image: cimg/postgres:9.6.5
+        auth:
+          username: $DOCKER_HUB_USER_ID
+          password: $DOCKER_HUB_PASSWORD
+        environment:
+          POSTGRES_PASSWORD: $DATABASE_PASSWORD
+          POSTGRES_DB: $TEST_DATABASE
+          POSTGRES_USER: $DATABASE_USERNAME
+
+    steps:
+      - checkout
+      - run:
+          name: Install pip packages
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install -r requirements.txt
+
+  deploy:
+    name: Build, tag and push to Dockerhub
+    command: |
+      docker build -t $IMAGE_NAME .
+      docker login -e $DOCKER_HUB_EMAIL -u $DOCKER_HUB_USER_ID -p $DOCKER_HUB_PASSWORD
+      docker tag dockerapp_dockerapp $DOCKER_HUB_USER_ID/$IMAGE_NAME:latest
+      docker push $DOCKER_HUB_USER_ID/$IMAGE_NAME:latest
