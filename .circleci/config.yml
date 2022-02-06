@@ -14,7 +14,7 @@ jobs:
           DATABASE_USERNAME: postgres
           TEST_DATABASE: myappdb
 
-      - image: cimg/postgres:9.6.5
+      - image: cimg/postgres:14.1.0
         auth:
           username: $DOCKER_HUB_USER_ID
           password: $DOCKER_HUB_PASSWORD
