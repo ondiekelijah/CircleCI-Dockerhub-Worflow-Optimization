@@ -8,8 +8,9 @@ jobs:
       DATABASE_HOSTNAME: ${{secrets.DATABASE_HOSTNAME}}
       DATABASE_PORT: ${{secrets.DATABASE_PORT}}
       DATABASE_PASSWORD: ${{secrets.DATABASE_PASSWORD}}
-      TEST_DATABASE: ${{secrets.TEST_DATABASE}}
+      DATABASE_NAME: ${{secrets.TEST_DATABASE}}
       DATABASE_USERNAME: ${{secrets.DATABASE_USERNAME}}
+      TEST_DATABASE: ${{secrets.TEST_DATABASE}}
 
     services:
       postgres:
