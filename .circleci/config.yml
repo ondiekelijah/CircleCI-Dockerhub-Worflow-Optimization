@@ -32,9 +32,25 @@ jobs:
             . venv/bin/activate
             pip install -r requirements.txt
 
+  deploy:
+    docker:
+      - image: circleci/buildpack-deps:stretch
+    steps:
+      - checkout
+      - run:
           name: Build and push to Dockerhub
           command: |
             docker build -t $IMAGE_NAME .
             docker login -e $DOCKER_HUB_EMAIL -u $DOCKER_HUB_USER_ID -p $DOCKER_HUB_PASSWORD
             docker tag dockerapp_dockerapp $DOCKER_HUB_USER_ID/$IMAGE_NAME:latest
-            docker push $DOCKER_HUB_USER_ID/$IMAGE_NAME:latest
+            docker push $DOCKER_HUB_USER_ID/$IMAGE_NAME:latest            
+
+
+workflows:
+  version: 2
+  build-master:
+    jobs:
+      - build:
+      - deploy:
+          requires:
+            - build
